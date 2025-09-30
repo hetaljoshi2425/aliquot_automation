@@ -237,6 +237,107 @@ npm run test:debug
 
 This opens the Playwright Inspector for step-by-step debugging.
 
+## Next Steps
+
+### 🚀 **Getting Started on New Machines**
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/hetaljoshi2425/aliquot_automation.git
+   cd aliquot_automation
+   ```
+
+2. **Set up environment**:
+   ```bash
+   # Copy environment template
+   cp env.example .env
+   
+   # Fill in your actual credentials in .env file:
+   # ALIQUOT_BASE_URL_QA=https://qa.aliquot.live/
+   # ALIQUOT_USERNAME_QA=your_username@example.com
+   # ALIQUOT_PASSWORD_QA=your_password
+   
+   # Install dependencies
+   npm install
+   
+   # Install Playwright browsers
+   npm run install:browsers
+   ```
+
+3. **Run tests**:
+   ```bash
+   # Run all tests in headed mode (recommended for development)
+   npm run test:qa:headed
+   
+   # Run all tests in headless mode (for CI/CD)
+   npm run test:qa:headless
+   
+   # Run specific test files
+   npx playwright test tests/Utilities.spec.ts --project=chromium-headed
+   npx playwright test tests/Site-Management.spec.ts --project=chromium-headed
+   ```
+
+4. **Deploy to Netlify** (if needed):
+   ```bash
+   # Generate test reports
+   npm run test:qa
+   npm run test:generate-report
+   
+   # Deploy to Netlify
+   npm run netlify:deploy
+   ```
+
+### 📊 **Test Execution Options**
+
+```bash
+# Development and debugging
+npm run test:qa:headed          # Run with browser visible
+npm run test:debug              # Debug mode with Playwright Inspector
+npm run test:ui                 # Playwright UI mode
+
+# CI/CD and automation
+npm run test:qa:headless        # Run without browser UI
+npm run test:qa:both            # Run both headed and headless
+
+# Reporting
+npm run test:generate-report    # Generate Allure reports
+npm run test:open-report        # Open Allure reports
+npm run test:report             # Serve Allure reports
+```
+
+### 🔧 **Environment Configuration**
+
+Create a `.env` file with your credentials:
+```bash
+# Required Environment Variables
+ALIQUOT_BASE_URL_QA=https://qa.aliquot.live/
+ALIQUOT_USERNAME_QA=your_username@example.com
+ALIQUOT_PASSWORD_QA=your_password
+
+# Optional Configuration
+HEADLESS=false
+CI=false
+```
+
+### 🚀 **Quick Start Commands**
+
+```bash
+# 1. Clone and setup
+git clone https://github.com/hetaljoshi2425/aliquot_automation.git
+cd aliquot_automation
+cp env.example .env
+# Edit .env with your credentials
+
+# 2. Install and run
+npm install
+npm run install:browsers
+npm run test:qa:headed
+
+# 3. View results
+npm run test:generate-report
+npm run test:open-report
+```
+
 ## Contributing
 
 1. Follow the Page Object Model pattern
