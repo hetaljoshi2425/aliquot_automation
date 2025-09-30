@@ -17,14 +17,23 @@ A comprehensive Playwright testing framework with TypeScript, Page Object Model,
 
 ```
 ├── tests/
-│   └── redirection.spec.ts
+│   ├── Customers.spec.ts
+│   ├── Dashboard.spec.ts
+│   ├── Inventory.spec.ts
+│   ├── Reports-components.spec.ts
+│   ├── Reports-surveys.spec.ts
+│   ├── Reports.spec.ts
+│   ├── Site-Management.spec.ts
+│   └── Utilities.spec.ts
 ├── pages/
 │   ├── BasePage.ts
-│   ├── HomePage.ts
-│   ├── AboutPage.ts
+│   └── LoginPage.ts
 ├── utils/
-│   └── config.ts
-├── reports/
+│   ├── config.ts
+│   └── testSetup.ts
+├── scripts/
+│   ├── deploy-to-netlify.sh
+│   └── netlify-build.sh
 ├── playwright.config.ts
 ├── package.json
 ├── tsconfig.json
@@ -89,20 +98,6 @@ Contains common actions and utilities:
 - `validateURL(expectedUrl)` - Validate current URL
 - `waitForElement(locator)` - Wait for element to be visible
 - `clickAndWaitForNavigation(locator)` - Click and wait for navigation
-
-### HomePage
-Specific to home page functionality:
-- `goto()` - Navigate to home page
-- `clickAboutLink()` - Click on About link
-- `getHeroText()` - Get hero section text
-- `isLoaded()` - Check if page is loaded
-
-### AboutPage
-Specific to about page functionality:
-- `goto()` - Navigate to about page
-- `clickBackToHome()` - Navigate back to home
-- `getTeamMembers()` - Get list of team members
-- `getMissionText()` - Get mission section text
 
 ### LoginPage
 Authentication functionality:
@@ -208,9 +203,12 @@ The framework focuses on testing application functionality with automatic authen
 - Performance testing
 
 ### 3. **Test Organization**
-- `appFunctionality.spec.ts` - Core application tests
-- Automatic authentication setup
-- Clean test structure focused on functionality
+- `Customers.spec.ts` - Customer management tests
+- `Dashboard.spec.ts` - Dashboard functionality tests
+- `Inventory.spec.ts` - Inventory management tests
+- `Reports.spec.ts` - Reporting functionality tests
+- `Site-Management.spec.ts` - Site management tests
+- `Utilities.spec.ts` - Utility functions tests
 
 ## Best Practices
 
