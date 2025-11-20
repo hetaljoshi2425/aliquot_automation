@@ -1,0 +1,58 @@
+name: Playwright Single Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Show workspace (diagnostic)
+        run: |
+          echo "Working directory: $GITHUB_WORKSPACE"
+          ls -la
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: "${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}"
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies (use ci when lockfile exists)
+        run: |
+          if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ]; then
+            echo "Lockfile found — running npm ci"
+            npm ci
+          else
+            echo "No lockfile found — running npm install"
+            npm install
+          fi
+
+      # ⭐ New step: Install Playwright browsers
+      - name: Install Playwright Chromium browser
+        run: |
+          npx playwright install
+          # Optional (Ubuntu dependencies, safe to skip):
+          # npx playwright install-deps chromium
+
+      - name: Run single Playwright test
+        run: npx playwright test tests/regression/functional/My_profile_edit.spec.ts --reporter=html
+
+      - name: Upload Playwright HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
