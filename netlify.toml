@@ -1,0 +1,104 @@
+[build]
+# Run only what’s needed for building and reporting
+command = """
+# Install dependencies only if node_modules is missing
+[ ! -d node_modules ] && npm install
+
+# Install Playwright browsers only if not installed
+[ ! -d node_modules/.playwright ] && npx playwright install
+
+# Build the app
+npm run build
+
+# Generate Playwright test report
+npm run test:generate-report
+"""
+publish = "allure-report"
+
+[build.environment]
+NODE_VERSION = "18"
+ALIQUOT_BASE_URL_QA = "https://qa.aliquot.live/"
+# ALIQUOT_USERNAME_QA = "your_username"
+# ALIQUOT_PASSWORD_QA = "your_password"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+[[headers]]
+for = "/*.html"
+[headers.values]
+Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+for = "/*.js"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*.css"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*.png"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*.jpg"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[build]
+  # Build command - generate Allure report
+  command = "npm run test:generate-report"
+  
+  # Directory to publish (Allure report output)
+  publish = "allure-report"
+  
+  # Functions directory (not needed for static reports)
+  # functions = "netlify/functions"
+
+[build.environment]
+  # Node.js version
+  NODE_VERSION = "18"
+  
+  # Environment variables for testing
+  ALIQUOT_BASE_URL_QA = "https://qa.aliquot.live/"
+  # Note: Add your actual credentials as Netlify environment variables
+  # ALIQUOT_USERNAME_QA = "your_username"
+  # ALIQUOT_PASSWORD_QA = "your_password"
+
+# Redirect rules for SPA-like behavior
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for better caching
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
