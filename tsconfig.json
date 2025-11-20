@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "outDir": "dist",  
+    "rootDir": ".", 
+    "types": ["node", "@playwright/test", "allure-playwright"],
+    "moduleResolution": "node16",  // Updated to "node16"
+    "module": "Node16",  // Added "module" set to "Node16"
+    "esModuleInterop": true,
+    "ignoreDeprecations": "6.0"  // Optional, to suppress warnings temporarily
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["dist", "node_modules", "**/*.js"] 
+}

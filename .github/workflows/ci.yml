@@ -1,0 +1,51 @@
+name: Allure Report Generation and Deployment
+
+
+on:
+  push:
+    branches:
+      - main  # Run on pushes to the main branch.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Run on the latest Ubuntu.
+
+    steps:
+
+    - name: Upload Allure Report as an artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: allure-report
+        path: allure-report/  # Path to the generated report folder.
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to GitHub Pages
+  uses: peaceiris/actions-gh-pages@v3
+  with:
+    deploy_key: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication.
+    publish_dir: ./allure-report  # The directory where the Allure report is generated.
+
+
+    - name: Set up Node.js environment
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'  # Set the Node.js version that matches your project.
+
+    - name: Install dependencies
+      run: |
+        npm install
+
+    - name: Run tests
+      run: |
+        npm test  # Modify with your test command if different.
+
+    - name: Generate Allure Report
+      run: |
+        allure generate allure-results --clean  # Generate the Allure report.
+
+    - name: Upload Allure Report as an artifact (optional)
+      uses: actions/upload-artifact@v3
+      with:
+        name: allure-report
+        path: allure-report/  # Adjust if your report is stored in a different folder.
